@@ -1,0 +1,2 @@
+Username,Name,Document,Hash,Salt,LastLogin,IsActive,IsFirstLogin
+login,login,123,$2b$10$TUzifArtT1ywc.cIB6cejeOOOT5JJ4zZJS9jDWNylht1nttMbaIWG,-1586710879,01/04/2023 15:10:19,False,True

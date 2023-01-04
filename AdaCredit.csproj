@@ -9,13 +9,17 @@
 
   <ItemGroup>
     <Folder Include="Client\" />
-    <Folder Include="Employee\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Employee\Resources\" />
+    <Folder Include="Utils\" />
     <Folder Include="Transaction\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="ConsoleMenu-simple" Version="2.4.3" />
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Sharprompt" Version="2.4.5" />
   </ItemGroup>
 
 </Project>

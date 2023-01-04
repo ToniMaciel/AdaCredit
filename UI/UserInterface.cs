@@ -1,35 +1,51 @@
-﻿using ConsoleTools;
+﻿using AdaCredit.Controllers;
+using ConsoleTools;
+using Sharprompt;
 using System;
 
 namespace AdaCredit.UI
 {
     public static class UserInterface
     {
-        public static void run(string[] args)
+        private static Facade _facade = new();
+        public static void Login(string[] args)
+        {
+            // TODO: Verificar se é o primeiro login ou se não há funcionários
+            bool successfulLogin = false;
+            string username = "", secret;
+            
+            while (!successfulLogin)
+            {
+                username = Prompt.Input<string>("Insira seu login");
+                secret = Prompt.Password("Insira sua senha");
+
+                successfulLogin = _facade.ValidLogin(username, secret);
+                
+                if (!successfulLogin)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Login ou senha inválidos, por favor tente novamente!");
+                }
+            }
+
+            // TODO: print msg de boas vindas e esperar no prompt
+            // TODO: atualizar login ao logar
+            Console.WriteLine("\nLogin feito com sucesso!\n<<Pressione qualquer tecla para continuar>>");
+            Console.ReadKey();
+            Run(args, username);
+        }
+        public static void Run(string[] args, string username)
         {
             var clientMenu = new ConsoleMenu(args, level: 1)
               .Add("Cadastrar Novo Cliente", () => SomeAction("Sub_One"))
-              .Add("Consultar os Dados de um Cliente existente", () => SomeAction("Sub_Two"))
-              .Add("Alterar o Cadastro de um Cliente existente", () => SomeAction("Sub_Three"))
-              .Add("Desativar Cadastro de um Cliente existente", () => SomeAction("Sub_Four"))
+              .Add("Consultar os Dados de um Cliente", () => SomeAction("Sub_Two"))
+              .Add("Alterar o Cadastro de um Cliente", () => SomeAction("Sub_Three"))
+              .Add("Desativar Cadastro de um Cliente", () => SomeAction("Sub_Four"))
               .Add("Voltar", ConsoleMenu.Close)
               .Configure(config =>
               {
                   config.Selector = "--> ";
                   config.Title = "Cliente";
-                  config.EnableBreadcrumb = true;
-                  config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
-              });
-
-            var employeeMenu = new ConsoleMenu(args, level: 1)
-              .Add("Cadastrar Novo Funcionário", () => SomeAction("Sub_One"))
-              .Add("Alterar Senha de um Funcionário existente", () => SomeAction("Sub_Two"))
-              .Add("Desativar Cadastro de um Funcionário existente", () => SomeAction("Sub_Three"))
-              .Add("Voltar", ConsoleMenu.Close)
-              .Configure(config =>
-              {
-                  config.Selector = "--> ";
-                  config.Title = "Funcionário";
                   config.EnableBreadcrumb = true;
                   config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
               });
@@ -50,10 +66,10 @@ namespace AdaCredit.UI
 
             var mainMenu = new ConsoleMenu(args, level: 0)
               .Add("Clientes", clientMenu.Show)
-              .Add("Funcionários", employeeMenu.Show)
+              .Add("Funcionários", () => UserInterfaceEmployee.Run(args, _facade, username))
               .Add("Transações", (thisMenu) => { SomeAction("Transações"); thisMenu.CloseMenu(); })
               .Add("Relatórios", reportsMenu.Show)
-              .Add("", ConsoleMenu.Close)
+              .Add("Fechar", ConsoleMenu.Close)
               .Configure(config =>
               {
                   config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");

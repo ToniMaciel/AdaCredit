@@ -7,7 +7,7 @@ namespace AdaCredit
     {
         static void Main(string[] args)
         {
-            UserInterface.run(args);
+            UserInterface.Login(args);
         }
     }
 }
