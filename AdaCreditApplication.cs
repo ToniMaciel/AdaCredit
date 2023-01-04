@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using AdaCredit.UI;
+using System;
 
 namespace AdaCredit
 {
@@ -7,7 +7,7 @@ namespace AdaCredit
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to AdaCredit!");
+            UserInterface.run(args);
         }
     }
 }

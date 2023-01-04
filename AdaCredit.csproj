@@ -7,4 +7,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Client\" />
+    <Folder Include="Employee\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Transaction\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConsoleMenu-simple" Version="2.4.3" />
+  </ItemGroup>
+
 </Project>
