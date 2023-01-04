@@ -13,11 +13,12 @@ namespace AdaCredit.Employee
     public class EmployeeRepository
     {
         private static EmployeeRepository? instance;
-        private List<Employee> employees = new();
+        private List<EmployeeEntity> employees = new();
         private string pathFile = BuildPathFile(Environment.CurrentDirectory);
 
         private EmployeeRepository() 
         {
+            // TODO: mesmo rolê feito em cliente
             if (!File.Exists(pathFile))
             {
                 Save();
@@ -30,7 +31,7 @@ namespace AdaCredit.Employee
 
                 using var reader = new StreamReader(pathFile);
                 using var csv = new CsvReader(reader, config);
-                    employees = csv.GetRecords<Employee>().ToList();
+                    employees = csv.GetRecords<EmployeeEntity>().ToList();
             }
         }
 
@@ -49,7 +50,7 @@ namespace AdaCredit.Employee
         internal bool addEmployee(string login, string name, string document)
         {
             var newSalt = new Faker().Random.Int().ToString();
-            var newEmployee = new Employee(login, name, document, HashPassword(newSalt + "pass"), newSalt);
+            var newEmployee = new EmployeeEntity(login, name, document, HashPassword(newSalt + "pass"), newSalt);
             
             try
             {
@@ -92,7 +93,7 @@ namespace AdaCredit.Employee
             return false;
         }
 
-        internal List<Employee> GetEmployees()
+        internal List<EmployeeEntity> GetEmployees()
         {
             return this.employees;
         }

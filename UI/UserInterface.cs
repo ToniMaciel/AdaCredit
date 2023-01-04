@@ -36,20 +36,6 @@ namespace AdaCredit.UI
         }
         public static void Run(string[] args, string username)
         {
-            var clientMenu = new ConsoleMenu(args, level: 1)
-              .Add("Cadastrar Novo Cliente", () => SomeAction("Sub_One"))
-              .Add("Consultar os Dados de um Cliente", () => SomeAction("Sub_Two"))
-              .Add("Alterar o Cadastro de um Cliente", () => SomeAction("Sub_Three"))
-              .Add("Desativar Cadastro de um Cliente", () => SomeAction("Sub_Four"))
-              .Add("Voltar", ConsoleMenu.Close)
-              .Configure(config =>
-              {
-                  config.Selector = "--> ";
-                  config.Title = "Cliente";
-                  config.EnableBreadcrumb = true;
-                  config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
-              });
-
             var reportsMenu = new ConsoleMenu(args, level: 1)
               .Add("Exibir Todos os Clientes Ativos com seus Respectivos Saldos", () => SomeAction("Sub_One"))
               .Add("Exibir Todos os Clientes Inativos", () => SomeAction("Sub_Two"))
@@ -65,7 +51,7 @@ namespace AdaCredit.UI
               });
 
             var mainMenu = new ConsoleMenu(args, level: 0)
-              .Add("Clientes", clientMenu.Show)
+              .Add("Clientes", () => UserInterfaceClient.Run(args, _facade.GetClientController(), username))
               .Add("Funcionários", () => UserInterfaceEmployee.Run(args, _facade, username))
               .Add("Transações", (thisMenu) => { SomeAction("Transações"); thisMenu.CloseMenu(); })
               .Add("Relatórios", reportsMenu.Show)

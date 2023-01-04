@@ -2,7 +2,7 @@
 
 namespace AdaCredit.Employee
 {
-    public sealed class Employee
+    public sealed class EmployeeEntity
     {
         public string Username { get; private set; }
         public string Name { get; private set; }
@@ -13,9 +13,9 @@ namespace AdaCredit.Employee
         public bool IsActive { get; private set; }
         public bool IsFirstLogin { get; private set; }
 
-        public Employee() { }
+        public EmployeeEntity() { }
 
-        public Employee(string username, string name, string document, string hash, string salt)
+        public EmployeeEntity(string username, string name, string document, string hash, string salt)
         {
             Username = username;
             Name = name;

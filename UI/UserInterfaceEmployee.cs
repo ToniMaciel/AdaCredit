@@ -35,6 +35,7 @@ namespace AdaCredit.UI
 
         private static void ChangeEmployeePassword(Facade facade)
         {
+            // TODO: pode passar os funcionários logo, só precisa fazer um toString
             var userEmployee = Prompt.Select("Selecione o funcionário", facade.GetEmployeesUsers());
             // TODO: verificar senha
             var newPassword = Prompt.Password("Insira a nova senha");
