@@ -224,5 +224,26 @@ namespace AdaCredit.Transaction
 
             return allFailedTransactions;
         }
+
+        internal static void PutDirInDesktop()
+        {
+            if (!Directory.Exists(transactionsDir))
+            {
+                var position = Environment.CurrentDirectory.LastIndexOf("bin");
+                var baseDir = Environment.CurrentDirectory[..(position)];
+                baseDir += "Transaction" + Path.DirectorySeparatorChar + "Resources";
+
+                if (Directory.Exists(baseDir))
+                {
+                    try
+                    {
+                        Directory.Move(baseDir, transactionsDir);
+                    } catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
     }
 }

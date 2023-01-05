@@ -6,6 +6,10 @@ namespace AdaCredit.Controllers
 {
     public class ControllerTransaction
     {
+        public ControllerTransaction() 
+        {
+            TransactionService.PutDirInDesktop();
+        }
         internal List<FailedTransactionEntity> GetAllFailedTransactions() 
             => TransactionService.GetAllFailedTransactions();
 
