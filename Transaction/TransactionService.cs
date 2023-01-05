@@ -15,7 +15,7 @@ namespace AdaCredit.Transaction
         private const string adaCreditCode = "777";
         private static readonly string transactionsDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.DirectorySeparatorChar + "Transactions";
         private static readonly DateTime dateWithoutTaxes = new(2022, 11, 30);
-        internal bool ProcessTransactions(ControllerClient controllerClient)
+        internal static bool ProcessTransactions(ControllerClient controllerClient)
         {
             try
             {
@@ -61,8 +61,6 @@ namespace AdaCredit.Transaction
 
             List<TransactionEntity> validTransections = new();
             List<FailedTransactionEntity> failedTransactions = new();
-
-            // TODO: refact
 
             foreach(var transaction in trasanctions)
             {
