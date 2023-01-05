@@ -24,6 +24,10 @@ namespace AdaCredit.Client
         {
             return this.clientRepository.GetClients();
         }
+        internal List<ClientEntity> GetClients(bool isActive)
+        {
+            return this.clientRepository.GetClients().Where(cli => cli.IsActive == isActive).ToList();
+        }
         internal bool DisableClient(ClientEntity client)
         {
             try

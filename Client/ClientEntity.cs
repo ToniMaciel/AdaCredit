@@ -5,7 +5,6 @@ namespace AdaCredit.Client
 {
     internal class ClientEntity
     {
-        // TODO: Criar uma classe conta que terá essas infos
         public string Name { get; private set; }
         public string PhoneNumber { get; private set; }
         public string Document { get; private set; }

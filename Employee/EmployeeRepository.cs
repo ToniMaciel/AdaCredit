@@ -47,7 +47,7 @@ namespace AdaCredit.Employee
             return baseDir + "Employee" + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + "employees.csv";
         }
 
-        internal bool addEmployee(string login, string name, string document)
+        internal EmployeeEntity? addEmployee(string login, string name, string document)
         {
             var newSalt = new Faker().Random.Int().ToString();
             var newEmployee = new EmployeeEntity(login, name, document, HashPassword(newSalt + "pass"), newSalt);
@@ -59,10 +59,10 @@ namespace AdaCredit.Employee
             } catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return false;
+                return null;
             }
 
-            return true;
+            return newEmployee;
         }
 
         private void Save()
@@ -98,18 +98,18 @@ namespace AdaCredit.Employee
             return this.employees;
         }
 
-        internal bool ChangeEmployeePassword(string userEmployee, string newPassword)
+        internal bool ChangeEmployeePassword(EmployeeEntity employee, string newPassword)
         {
-            var employee = employees.FirstOrDefault(x => x.Username == userEmployee);
-
-            if (employee != null)
+            try
             {
                 employee.UpdateHash(HashPassword(employee.Salt + newPassword));
                 Save();
                 return true;
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
-
-            return false;
         }
 
         internal bool DisableEmployee(string userEmployee)
@@ -124,6 +124,20 @@ namespace AdaCredit.Employee
             }
 
             return false;
+        }
+
+        internal bool UpdateLogin(EmployeeEntity? employee, DateTime now)
+        {
+            try
+            {
+                employee.UpdateLogin(now);
+                Save();
+                return true;
+            } catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
     }
 }

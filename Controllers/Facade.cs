@@ -40,6 +40,11 @@ namespace AdaCredit.Controllers
             return this._controllerClient;
         }
 
+        internal ControllerEmployee GetEmployeeControler()
+        {
+            return this._controllerEmployee;
+        }
+
         internal List<string> GetEmployeesUsers()
         {
             return _controllerEmployee.GetEmployeesUsers();

@@ -11,10 +11,10 @@ namespace AdaCredit.Controllers
     {
         private EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
 
-        internal bool ChangeEmployeePassword(string userEmployee, string newPassword)
-         =>  employeeRepository.ChangeEmployeePassword(userEmployee, newPassword);
+        internal bool ChangeEmployeePassword(EmployeeEntity employee, string newPassword)
+         =>  employeeRepository.ChangeEmployeePassword(employee, newPassword);
 
-        internal bool CreateEmployee(string login, string name, string document)
+        internal EmployeeEntity CreateEmployee(string login, string name, string document)
         {
             return employeeRepository.addEmployee(login, name, document);
         }
@@ -30,5 +30,10 @@ namespace AdaCredit.Controllers
         }
 
         internal bool ValidLogin(string login, string password) => employeeRepository.IsValidLogin(login, password);
+
+        // TODO: arrumar isso para service
+        internal List<EmployeeEntity> GetEmployees(bool isActive) => employeeRepository.GetEmployees().Where(emp => emp.IsActive == isActive).ToList();
+        internal EmployeeEntity? GetEmployee(string username) => employeeRepository.GetEmployees().FirstOrDefault(emp => emp.Username == username);
+        internal bool UpdateLogin(EmployeeEntity? employee, DateTime now) => employeeRepository.UpdateLogin(employee, now);
     }
 }

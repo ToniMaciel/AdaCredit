@@ -36,5 +36,10 @@ namespace AdaCredit.Employee
         {
             this.IsActive = false;
         }
+
+        internal void UpdateLogin(DateTime now)
+        {
+            this.LastLogin = now;
+        }
     }
 }

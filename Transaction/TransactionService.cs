@@ -200,5 +200,31 @@ namespace AdaCredit.Transaction
             
             return value;
         }
+
+        internal static List<FailedTransactionEntity> GetAllFailedTransactions()
+        {
+            string failedTransactionPath = transactionsDir + Path.DirectorySeparatorChar + "Failed";
+            List<FailedTransactionEntity> allFailedTransactions = new();
+            
+            if (Directory.Exists(failedTransactionPath))
+            {
+                var filesToProcess = Directory.GetFiles(failedTransactionPath);
+                foreach (var file in filesToProcess)
+                {
+                    var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                    {
+                        IncludePrivateMembers = true,
+                    };
+
+                    using var reader = new StreamReader(file);
+                    using var csv = new CsvReader(reader, config);
+                    var transactions = csv.GetRecords<FailedTransactionEntity>().ToList();
+
+                    allFailedTransactions.AddRange(transactions);
+                }
+            }
+
+            return allFailedTransactions;
+        }
     }
 }

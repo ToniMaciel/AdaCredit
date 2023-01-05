@@ -8,7 +8,7 @@ namespace AdaCredit.Transaction
 {
     internal class FailedTransactionEntity : TransactionEntity
     {
-        private string failedTransactionDetail;
+        public string FailedTransactionDetail { get; private set; }
         public FailedTransactionEntity(TransactionEntity transaction) 
         {
             this.AccountNumberSource = transaction.AccountNumberSource;
@@ -19,12 +19,12 @@ namespace AdaCredit.Transaction
             this.BankCodeTarget = transaction.BankCodeTarget;
             this.TransactionType = transaction.TransactionType;
             this.Value = transaction.Value;
-            this.failedTransactionDetail = String.Empty;
+            this.FailedTransactionDetail = String.Empty;
         }
 
         public FailedTransactionEntity(TransactionEntity transaction, string failedTransactionDetail) : this(transaction)
         {
-            this.failedTransactionDetail = failedTransactionDetail;
+            this.FailedTransactionDetail = failedTransactionDetail;
         }
     }
 }
