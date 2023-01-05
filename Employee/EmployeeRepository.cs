@@ -23,9 +23,8 @@ namespace AdaCredit.Employee
             this.pathFile = pathDir + Path.DirectorySeparatorChar + "employees.csv";
 
             if (!File.Exists(pathFile))
-            {
                 Save();
-            } else
+            else
             {
                 var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {

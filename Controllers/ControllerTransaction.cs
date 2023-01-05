@@ -6,8 +6,10 @@ namespace AdaCredit.Controllers
 {
     public class ControllerTransaction
     {
-        internal List<FailedTransactionEntity> GetAllFailedTransactions() => TransactionService.GetAllFailedTransactions();
+        internal List<FailedTransactionEntity> GetAllFailedTransactions() 
+            => TransactionService.GetAllFailedTransactions();
 
-        internal bool ProcessTransactions(ControllerClient controllerClient) => TransactionService.ProcessTransactions(controllerClient);
+        internal bool ProcessTransactions(ControllerClient controllerClient) 
+            => TransactionService.ProcessTransactions(controllerClient);
     }
 }

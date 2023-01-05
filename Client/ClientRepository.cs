@@ -24,9 +24,7 @@ namespace AdaCredit.Client
             this.pathFile = pathDir + Path.DirectorySeparatorChar + "clients.csv";
 
             if (!File.Exists(pathFile))
-            {
                 Save();
-            }
             else
             {
                 var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -66,12 +64,10 @@ namespace AdaCredit.Client
                 Console.WriteLine(ex.Message);
             }
         }
-
         public List<ClientEntity> GetClients()
         {
             return this.clients;
         }
-
         internal bool AddClient(ClientEntity client)
         {
             try

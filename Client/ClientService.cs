@@ -36,8 +36,7 @@ namespace AdaCredit.Client
             }
             catch (Exception ex)
             {
-                // TODO: mudar print da mensagem
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
@@ -70,8 +69,8 @@ namespace AdaCredit.Client
             return accountNumber;
         }
 
-        // TODO: olhar isso aqui
-        internal ClientEntity GetClientByAccNumber(string accountNumber) => GetClients().FirstOrDefault(cli => cli.AccountNumber == accountNumber);
+        internal ClientEntity GetClientByAccNumber(string accountNumber) 
+            => GetClients().FirstOrDefault(cli => cli.AccountNumber == accountNumber);
 
         internal bool UpdateClientBalance(ClientEntity client, decimal value)
         {

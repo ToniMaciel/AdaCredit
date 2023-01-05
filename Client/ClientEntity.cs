@@ -1,7 +1,4 @@
-﻿using CsvHelper;
-using System;
-
-namespace AdaCredit.Client
+﻿namespace AdaCredit.Client
 {
     internal class ClientEntity
     {
