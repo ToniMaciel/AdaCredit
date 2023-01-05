@@ -53,7 +53,7 @@ namespace AdaCredit.UI
             var mainMenu = new ConsoleMenu(args, level: 0)
               .Add("Clientes", () => UserInterfaceClient.Run(args, _facade.GetClientController(), username))
               .Add("Funcionários", () => UserInterfaceEmployee.Run(args, _facade, username))
-              .Add("Transações", (thisMenu) => { SomeAction("Transações"); thisMenu.CloseMenu(); })
+              .Add("Transações", () => UserInterfaceTransaction.Run(args, _facade.GetTransactionController()))
               .Add("Relatórios", reportsMenu.Show)
               .Add("Fechar", ConsoleMenu.Close)
               .Configure(config =>

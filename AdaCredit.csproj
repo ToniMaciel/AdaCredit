@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="Employee\Resources\" />
     <Folder Include="Utils\" />
-    <Folder Include="Transaction\" />
   </ItemGroup>
 
   <ItemGroup>

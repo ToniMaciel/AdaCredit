@@ -10,11 +10,13 @@ namespace AdaCredit.Controllers
     {
         private ControllerEmployee _controllerEmployee;
         private ControllerClient _controllerClient;
+        private ControllerTransaction _controllerTransaction;
 
         public Facade()
         { 
             _controllerEmployee = new ControllerEmployee();
             _controllerClient = new ControllerClient();
+            _controllerTransaction = new ControllerTransaction();
         }
         public bool ValidLogin(string login, string password) => _controllerEmployee.ValidLogin(login, password);
 
@@ -41,6 +43,11 @@ namespace AdaCredit.Controllers
         internal List<string> GetEmployeesUsers()
         {
             return _controllerEmployee.GetEmployeesUsers();
+        }
+
+        internal ControllerTransaction GetTransactionController()
+        {
+            return this._controllerTransaction;
         }
     }
 }

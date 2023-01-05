@@ -22,7 +22,7 @@ namespace AdaCredit.Client
 
         internal List<ClientEntity> GetClients()
         {
-            return clientRepository.GetClients();
+            return this.clientRepository.GetClients();
         }
         internal bool DisableClient(ClientEntity client)
         {
@@ -34,6 +34,7 @@ namespace AdaCredit.Client
             }
             catch (Exception ex)
             {
+                // TODO: mudar print da mensagem
                 Console.WriteLine(ex);
                 return false;
             }
@@ -65,6 +66,24 @@ namespace AdaCredit.Client
             }
 
             return accountNumber;
+        }
+
+        // TODO: olhar isso aqui
+        internal ClientEntity GetClientByAccNumber(string accountNumber) => GetClients().FirstOrDefault(cli => cli.AccountNumber == accountNumber);
+
+        internal bool UpdateClientBalance(ClientEntity client, decimal value)
+        {
+            try
+            {
+                client.UpdateBalance(value);
+                clientRepository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
     }
 }

@@ -18,7 +18,14 @@ namespace AdaCredit.Controllers
 
         internal bool DisableClient(ClientEntity client) => clientService.DisableClient(client);
 
+        internal ClientEntity GetClient(string accountNumber) => clientService.GetClientByAccNumber(accountNumber);
+
         internal List<ClientEntity> GetClients() => clientService.GetClients();
+
+        internal void UpdateClientBalance(ClientEntity client, decimal value)
+        {
+            throw new NotImplementedException();
+        }
 
         internal bool UpdateClientPhone(ClientEntity userClient, string newPhoneNumber) => clientService.UpdateClientPhone(userClient, newPhoneNumber);
     }

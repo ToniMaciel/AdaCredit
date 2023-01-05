@@ -36,6 +36,11 @@ namespace AdaCredit.Client
         {
             this.IsActive = false;
         }
+        
+        internal void UpdateBalance (decimal value)
+        {
+            this.AccountBalance += value;
+        }
 
         public override string ToString()
         {
