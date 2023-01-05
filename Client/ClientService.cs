@@ -13,7 +13,7 @@ namespace AdaCredit.Client
 
         internal bool CreateClient(string name, string phoneNumber, string document, string username)
         {
-            if(GetClients().Select(c => c.Document == document).Any())
+            if(GetClients().Any(c => c.Document == document))
             {
                 Console.Write($"\nO CPF {document} já existe.");
                 return false;

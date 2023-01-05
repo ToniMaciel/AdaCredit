@@ -52,6 +52,7 @@ namespace AdaCredit.UI
         }
         public static void Run(string[] args, EmployeeEntity loginUser)
         {
+            // TODO: Mostrar titulos dos menus
             var mainMenu = new ConsoleMenu(args, level: 0)
               .Add("Clientes", () => UserInterfaceClient.Run(args, _facade.GetClientController(), loginUser))
               .Add("Funcionários", () => UserInterfaceEmployee.Run(args, _facade.GetEmployeeControler(), loginUser))

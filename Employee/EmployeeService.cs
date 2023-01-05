@@ -12,6 +12,18 @@ namespace AdaCredit.Employee
 
         internal EmployeeEntity? AddEmployee(string login, string name, string document, string userLogged)
         {
+            if (GetEmployees().Any(c => c.Document == document))
+            {
+                Console.Write($"\nO CPF {document} já existe.");
+                return null;
+            }
+
+            if (GetEmployees().Any(c => c.Username == login))
+            {
+                Console.Write($"\nO login {login} já existe.");
+                return null;
+            }
+
             var newSalt = new Faker().Random.Int().ToString();
             var newEmployee = new EmployeeEntity(login, name, document, HashPassword(newSalt + "pass"), newSalt, userLogged);
 

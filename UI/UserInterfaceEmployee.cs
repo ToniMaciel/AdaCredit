@@ -63,11 +63,13 @@ namespace AdaCredit.UI
             
             if(answer)
                 UpdateNewPassword(userEmployee, controllerEmployee, userLogged);
-            else 
+            else
+            {
                 Console.WriteLine("Operação cancelada.");
+                Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
+                Console.ReadKey();
+            }
 
-            Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
-            Console.ReadKey();
         }
 
         internal static EmployeeEntity? CreateNewEmployee(ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
