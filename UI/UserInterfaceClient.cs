@@ -30,13 +30,18 @@ namespace AdaCredit.UI
         private static void DisableClient(ControllerClient controllerClient, EmployeeEntity loginUser)
         {
             var userClient = Prompt.Select("Selecione o cliente", controllerClient.GetClients());
-            
-            bool success = controllerClient.DisableClient(userClient, loginUser.Username);
-            
-            if (success)
-                Console.WriteLine($"\n{userClient} desativado com sucesso!");
-            else
-                Console.WriteLine("\nNão foi possível desativar o cliente");
+            var answer = Prompt.Confirm($"Tem certeza que deseja desativar o cliente {userClient}?", defaultValue: true);
+
+            if (answer)
+            {
+                bool success = controllerClient.DisableClient(userClient, loginUser.Username);
+
+                if (success)
+                    Console.WriteLine($"\n{userClient} desativado com sucesso!");
+                else
+                    Console.WriteLine("\nNão foi possível desativar o cliente");
+            }
+            else Console.WriteLine("Operação cancelada.");
 
             Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
             Console.ReadKey();

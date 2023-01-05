@@ -10,10 +10,10 @@ namespace AdaCredit.Employee
     {
         private EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
 
-        internal EmployeeEntity? AddEmployee(string login, string name, string document, string username)
+        internal EmployeeEntity? AddEmployee(string login, string name, string document, string userLogged)
         {
             var newSalt = new Faker().Random.Int().ToString();
-            var newEmployee = new EmployeeEntity(login, name, document, HashPassword(newSalt + "pass"), newSalt);
+            var newEmployee = new EmployeeEntity(login, name, document, HashPassword(newSalt + "pass"), newSalt, userLogged);
 
             try
             {

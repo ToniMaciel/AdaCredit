@@ -30,28 +30,44 @@ namespace AdaCredit.UI
         private static void DisableEmployee(ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
         {
             var userEmployee = Prompt.Select("Selecione o funcionário", controllerEmployee.GetEmployees());
-            // TODO: colocar mensagem de confirmação
-            bool success = controllerEmployee.DisableEmployee(userEmployee, userLogged.Username);
+            var answer = Prompt.Confirm($"Tem certeza que deseja desativar o funcionário {userEmployee}?", defaultValue: true);
             
-            if (success)
-                Console.WriteLine($"\n{userEmployee} desativado com sucesso!");
-            else
-                Console.WriteLine("\nNão foi possível desativar o cliente");
+            if (answer)
+            {
+                bool success = controllerEmployee.DisableEmployee(userEmployee, userLogged.Username);
+            
+                if (success)
+                {
+                    Console.WriteLine($"\n{userEmployee} desativado com sucesso!");
+                    if(userEmployee.Username == userLogged.Username)
+                    {
+                        Console.WriteLine("\nATENÇÂO: Seu usuário foi desativado.\n<<Aperte qualquer tecla para sair>>");
+                        Console.ReadKey();
+                        Environment.Exit(0);
+                    }
+                }
+                else
+                    Console.WriteLine("\nNão foi possível desativar o cliente");
+
+            }
+            else Console.WriteLine("Operação cancelada.");
 
             Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
             Console.ReadKey();
-            
-            if(userEmployee.Username == userLogged.Username)
-            {
-                Console.WriteLine("ATENÇÂO: Seu usuário foi desativado.\n<<Aperte qualquer tecla para sair>>");
-                Console.ReadKey();
-            }
         }
 
         private static void ChangeEmployeePassword(ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
         {
             var userEmployee = Prompt.Select("Selecione o funcionário", controllerEmployee.GetEmployees());
-            UpdateNewPassword(userEmployee, controllerEmployee, userLogged);
+            var answer = Prompt.Confirm($"Tem certeza que deseja alterar a senha do funcionário {userEmployee}?", defaultValue: true);
+            
+            if(answer)
+                UpdateNewPassword(userEmployee, controllerEmployee, userLogged);
+            else 
+                Console.WriteLine("Operação cancelada.");
+
+            Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
+            Console.ReadKey();
         }
 
         internal static EmployeeEntity? CreateNewEmployee(ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
