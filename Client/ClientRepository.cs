@@ -48,8 +48,8 @@ namespace AdaCredit.Client
 
         private static string BuildPathDir(string currentDirectory)
         {
-            // TODO: rever esse método aqui -> Pode pegar o último bin
-            var baseDir = currentDirectory.Split("bin")[0];
+            var position = currentDirectory.LastIndexOf("bin");
+            var baseDir = currentDirectory[..(position)];
             return baseDir + "Client" + Path.DirectorySeparatorChar + "Resources";
         }
 

@@ -46,8 +46,8 @@ namespace AdaCredit.Employee
 
         private static string BuildPathDir(string currentDirectory)
         {
-            // TODO: arrumar isso aqui
-            var baseDir = currentDirectory.Split("bin")[0];
+            var position = currentDirectory.LastIndexOf("bin");
+            var baseDir = currentDirectory[..(position)];
             return baseDir + "Employee" + Path.DirectorySeparatorChar + "Resources";
         }
         internal void Save()
