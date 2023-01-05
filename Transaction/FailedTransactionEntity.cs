@@ -9,6 +9,7 @@ namespace AdaCredit.Transaction
     internal class FailedTransactionEntity : TransactionEntity
     {
         public string FailedTransactionDetail { get; private set; }
+        public FailedTransactionEntity() { }  
         public FailedTransactionEntity(TransactionEntity transaction) 
         {
             this.AccountNumberSource = transaction.AccountNumberSource;

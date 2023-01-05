@@ -42,7 +42,7 @@ namespace AdaCredit.UI
 
             Table table = new(headers);
             foreach (var client in controllerClient.GetClients(isActive))
-                table.AddRow(client.Name, client.PhoneNumber, client.Document, client.AccountNumber, client.AccountBalance, client.LastEmployeeToChange);
+                table.AddRow(client.Name, client.PhoneNumber, client.Document, client.AccountNumber, $"{client.AccountBalance,0:F2}", client.LastEmployeeToChange);
             table.Config = TableConfiguration.Unicode();
 
             Console.Write(table.ToString());
@@ -77,27 +77,23 @@ namespace AdaCredit.UI
         {
             ColumnHeader[] headers = new[]
             {
-                new ColumnHeader("Código Banco (Origem)", Alignment.Center, Alignment.Center),
-                new ColumnHeader("Agência (Origem)", Alignment.Center, Alignment.Center),
-                new ColumnHeader("N. da conta (Origem)", Alignment.Center, Alignment.Center),
-                new ColumnHeader("Código Banco (Destino)", Alignment.Center, Alignment.Center),
-                new ColumnHeader("Agência (Destino)", Alignment.Center, Alignment.Center),
-                new ColumnHeader("N. da conta (Destino)", Alignment.Center, Alignment.Center),
-                new ColumnHeader("Tipo de transação", Alignment.Center, Alignment.Center),
-                new ColumnHeader("valor", Alignment.Center, Alignment.Center),
-                new ColumnHeader("Detalhes da falha", Alignment.Center, Alignment.Center)
+                new ColumnHeader("Cód. Banco (Origem)", Alignment.Center, Alignment.Center),
+                new ColumnHeader("N. conta (Origem)", Alignment.Center, Alignment.Center),
+                new ColumnHeader("Cód. Banco (Destino)", Alignment.Center, Alignment.Center),
+                new ColumnHeader("N. conta (Destino)", Alignment.Center, Alignment.Center),
+                new ColumnHeader("Transação", Alignment.Center, Alignment.Center),
+                new ColumnHeader("Valor", Alignment.Center, Alignment.Center),
+                new ColumnHeader("Falha", Alignment.Center, Alignment.Center)
             };
 
             Table table = new(headers);
             foreach (var transaction in controllerTransaction.GetAllFailedTransactions())
                 table.AddRow(transaction.BankCodeSource, 
-                            transaction.BankBranchSource, 
                             transaction.AccountNumberSource, 
                             transaction.BankCodeTarget, 
-                            transaction.BankBranchTarget, 
                             transaction.AccountNumberTarget,
                             transaction.TransactionType,
-                            transaction.Value,
+                            $"{transaction.Value, 0:F2}",
                             transaction.FailedTransactionDetail);
             table.Config = TableConfiguration.Unicode();
 

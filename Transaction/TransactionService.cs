@@ -82,13 +82,13 @@ namespace AdaCredit.Transaction
                     if(source is null)
                     {
                         validOperation = false;
-                        failedTransactionDetail = "Número de conta de origem inexistente";
+                        failedTransactionDetail = "Conta de origem inexistente";
                     } 
                     
                     else if (!source.IsActive)
                     {
                         validOperation = false;
-                        failedTransactionDetail = "Número de conta de origem desativado";
+                        failedTransactionDetail = "Conta de origem desativada";
                     } 
                     
                     else if (source.AccountBalance < transaction.Value)
@@ -105,13 +105,13 @@ namespace AdaCredit.Transaction
                     if (target is null)
                     {
                         validOperation = false;
-                        failedTransactionDetail = "Número de conta de destino inexistente";
+                        failedTransactionDetail = "Conta de destino inexistente";
                     }
 
                     else if (!target.IsActive)
                     {
                         validOperation = false;
-                        failedTransactionDetail = "Número de conta de destino desativado";
+                        failedTransactionDetail = "Conta de destino desativada";
                     }
                 }
 
@@ -207,6 +207,7 @@ namespace AdaCredit.Transaction
                     var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                     {
                         IncludePrivateMembers = true,
+                        HasHeaderRecord = false,
                     };
 
                     using var reader = new StreamReader(file);
