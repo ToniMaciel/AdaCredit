@@ -38,6 +38,8 @@ namespace AdaCredit.UI
             {
                 Console.WriteLine("Será necessário adicionar um funcionário para continuar.");
                 employee = UserInterfaceEmployee.CreateNewEmployee(_facade.GetEmployeeControler(), employee);
+                Run(args, employee);
+                return;
             }
             else if(employee.IsFirstLogin)
             {

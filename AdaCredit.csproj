@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Client\Resources\" />
     <Folder Include="Employee\Resources\" />
     <Folder Include="Utils\" />
   </ItemGroup>

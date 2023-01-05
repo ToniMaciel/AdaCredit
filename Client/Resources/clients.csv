@@ -1,3 +1,2 @@
-Name,PhoneNumber,Document,AccountNumber,BankBranch,AccountBalance,IsActive
-Toni,987,456,58773-0,0001,0.0,True
-Teste,657,134134,58733-0,0001,14.67,False
+Name,PhoneNumber,Document,AccountNumber,BankBranch,AccountBalance,IsActive,LastEmployeeToChange
+Teste1,001,002,29994-4,0001,0.0,True,jaam

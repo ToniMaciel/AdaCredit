@@ -39,7 +39,7 @@ namespace AdaCredit.UI
                 if (success)
                     Console.WriteLine($"\n{userClient} desativado com sucesso!");
                 else
-                    Console.WriteLine("\nNão foi possível desativar o cliente");
+                    Console.WriteLine("\nNão foi possível desativar o cliente.");
             }
             else Console.WriteLine("Operação cancelada.");
 
@@ -57,7 +57,7 @@ namespace AdaCredit.UI
             if (success)
                 Console.WriteLine("\nCliente atualizado com sucesso!");
             else
-                Console.WriteLine("\nNão foi possível atualizar o cliente");
+                Console.WriteLine("\nNão foi possível atualizar o cliente.");
 
             Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
             Console.ReadKey();
@@ -82,7 +82,7 @@ namespace AdaCredit.UI
             if (success)
                 Console.WriteLine("\nCliente adicionado com sucesso!");
             else
-                Console.WriteLine("\nNão foi possível adicionar o cliente");
+                Console.WriteLine("\nNão foi possível adicionar o cliente.");
 
             Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
             Console.ReadKey();

@@ -13,6 +13,12 @@ namespace AdaCredit.Client
 
         internal bool CreateClient(string name, string phoneNumber, string document, string username)
         {
+            if(GetClients().Select(c => c.Document == document).Any())
+            {
+                Console.Write($"\nO CPF {document} já existe.");
+                return false;
+            }
+            
             var accountNumber = UniqueAccountNumber();
             var client = new ClientEntity(name, phoneNumber, document, accountNumber, username);
             return clientRepository.AddClient(client);
@@ -63,7 +69,7 @@ namespace AdaCredit.Client
             while(!unique)
             {
                 accountNumber = faker.Random.ReplaceNumbers("#####-#");
-                unique = !clientRepository.GetClients().Select(cli => cli.AccountNumber == accountNumber).Any();
+                unique = clientRepository.GetClients().Select(cli => cli.AccountNumber == accountNumber).Any();
             }
 
             return accountNumber;

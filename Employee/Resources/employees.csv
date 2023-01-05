@@ -1,2 +1,3 @@
-Username,Name,Document,Hash,Salt,LastLogin,IsActive,IsFirstLogin
-login,login,123,$2b$10$TUzifArtT1ywc.cIB6cejeOOOT5JJ4zZJS9jDWNylht1nttMbaIWG,-1586710879,01/04/2023 15:10:19,False,True
+Username,Name,Document,Hash,Salt,LastLogin,IsActive,IsFirstLogin,LastEmployeeToChange
+jaam,Toni Maciel,709,$2b$10$ryrpdihZkzcjdCrMUbkioeoswts0T4Afqhrdr3UrV/nBhfcQ4U4iS,-743592496,01/05/2023 15:02:36,True,False,jaam
+ella,Rafaella Almeida,085,$2b$10$CKmQyBB3Wm2fFgl23UFGDeIluAz.9DnWoxi9BJVKQUbnpCgwd.jJu,142384847,01/05/2023 14:47:14,True,True,jaam
