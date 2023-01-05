@@ -19,7 +19,7 @@ namespace AdaCredit.UI
                   config.Selector = "--> ";
                   config.Title = "Transações";
                   config.EnableBreadcrumb = false;
-                  config.EnableWriteTitle = false;
+                  config.EnableWriteTitle = true;
               });
 
             transactionMenu.Show();

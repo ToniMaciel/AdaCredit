@@ -18,10 +18,11 @@ namespace AdaCredit.UI
               .Add("Voltar", ConsoleMenu.Close)
               .Configure(config =>
               {
+                  config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                   config.Selector = "--> ";
                   config.Title = "Relatórios";
-                  config.EnableBreadcrumb = true;
-                  config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
+                  config.EnableBreadcrumb = false;
+                  config.EnableWriteTitle = true;
               });
 
             reportsMenu.Show(); 

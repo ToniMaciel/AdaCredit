@@ -64,7 +64,7 @@ namespace AdaCredit.UI
                   config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                   config.Selector = "--> ";
                   config.Title = "Menu principal";
-                  config.EnableWriteTitle = false;
+                  config.EnableWriteTitle = true;
                   config.EnableBreadcrumb = false;
               });
 

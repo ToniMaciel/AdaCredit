@@ -21,7 +21,7 @@ namespace AdaCredit.UI
                   config.Selector = "--> ";
                   config.Title = "Funcionário";
                   config.EnableBreadcrumb = false;
-                  config.EnableWriteTitle = false;
+                  config.EnableWriteTitle = true;
               });
 
             employeeMenu.Show();
