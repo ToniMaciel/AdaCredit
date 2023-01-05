@@ -35,12 +35,13 @@ namespace AdaCredit.UI
                 new ColumnHeader("Telefone", Alignment.Center, Alignment.Center),
                 new ColumnHeader("CPF", Alignment.Center, Alignment.Center),
                 new ColumnHeader("Número de conta", Alignment.Center, Alignment.Center),
-                new ColumnHeader("Saldo", Alignment.Center, Alignment.Center)
+                new ColumnHeader("Saldo", Alignment.Center, Alignment.Center),
+                new ColumnHeader("Último funcionário a alterar", Alignment.Center, Alignment.Center),
             };
 
             Table table = new(headers);
             foreach (var client in controllerClient.GetClients(isActive))
-                table.AddRow(client.Name, client.PhoneNumber, client.Document, client.AccountNumber, client.AccountBalance);
+                table.AddRow(client.Name, client.PhoneNumber, client.Document, client.AccountNumber, client.AccountBalance, client.LastEmployeeToChange);
             table.Config = TableConfiguration.Unicode();
 
             Console.Write(table.ToString());
@@ -56,12 +57,13 @@ namespace AdaCredit.UI
                 new ColumnHeader("Login", Alignment.Center, Alignment.Center),
                 new ColumnHeader("Nome", Alignment.Center, Alignment.Center),
                 new ColumnHeader("CPF", Alignment.Center, Alignment.Center),
-                new ColumnHeader("Último login", Alignment.Center, Alignment.Center)
+                new ColumnHeader("Último login", Alignment.Center, Alignment.Center),
+                new ColumnHeader("Último funcionário a alterar", Alignment.Center, Alignment.Center)
             };
 
             Table table = new(headers);
             foreach (var employee in controllerEmployee.GetEmployees(isActive))
-                table.AddRow(employee.Username, employee.Name, employee.Document, employee.LastLogin);
+                table.AddRow(employee.Username, employee.Name, employee.Document, employee.LastLogin, employee.LastEmployeeToChange);
             table.Config = TableConfiguration.Unicode();
 
             Console.Write(table.ToString());
