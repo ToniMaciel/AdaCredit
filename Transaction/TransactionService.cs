@@ -22,18 +22,19 @@ namespace AdaCredit.Transaction
                 string pendingTransactionsPath = transactionsDir + Path.DirectorySeparatorChar + "Pending";
                 if (Directory.Exists(pendingTransactionsPath))
                 {
-                    var filesToProcess = Directory.GetFiles(pendingTransactionsPath);
-                    foreach ( var file in filesToProcess )
+                    DirectoryInfo filesToProcess = new(pendingTransactionsPath);
+                    foreach (var file in filesToProcess.GetFiles())
                     {
-                        int prefixPosition = file.LastIndexOf(Path.DirectorySeparatorChar);
-                        int position = file.LastIndexOf("-");
-                        int finalDot = file.LastIndexOf(".");
+                        int prefixPosition = file.FullName.LastIndexOf(Path.DirectorySeparatorChar);
+                        int position = file.FullName.LastIndexOf("-");
+                        int finalDot = file.FullName.LastIndexOf(".");
                         
-                        var bankName = file[(prefixPosition + 1)..position];
-                        var date = file[(position + 1)..(finalDot-1)];
+                        var bankName = file.FullName[(prefixPosition + 1)..position];
+                        var date = file.FullName[(position + 1)..(finalDot)];
 
-                        ProcessTransaction(file, bankName, date, controllerClient);
-                    }
+                        ProcessTransaction(file.FullName, bankName, date, controllerClient);
+                        file.Delete();
+                    } 
                 }
                 return true;
             }
@@ -76,18 +77,18 @@ namespace AdaCredit.Transaction
 
                 if(validOperation && transaction.BankCodeSource == adaCreditCode)
                 {
-                    source = controllerClient.GetClient(transaction.AccountNumberSource);
+                    source = controllerClient.GetClient(transaction.AccountNumberSource.Insert(5,"-"));
 
                     if(source is null)
                     {
                         validOperation = false;
-                        failedTransactionDetail = "Número de conta inexistente";
+                        failedTransactionDetail = "Número de conta de origem inexistente";
                     } 
                     
                     else if (!source.IsActive)
                     {
                         validOperation = false;
-                        failedTransactionDetail = "Número de conta desativado";
+                        failedTransactionDetail = "Número de conta de origem desativado";
                     } 
                     
                     else if (source.AccountBalance < transaction.Value)
@@ -99,24 +100,18 @@ namespace AdaCredit.Transaction
 
                 if (validOperation && transaction.BankCodeTarget == adaCreditCode)
                 {
-                    target = controllerClient.GetClient(transaction.AccountNumberTarget);
+                    target = controllerClient.GetClient(transaction.AccountNumberTarget.Insert(5, "-"));
 
                     if (target is null)
                     {
                         validOperation = false;
-                        failedTransactionDetail = "Número de conta inexistente";
+                        failedTransactionDetail = "Número de conta de destino inexistente";
                     }
 
                     else if (!target.IsActive)
                     {
                         validOperation = false;
-                        failedTransactionDetail = "Número de conta desativado";
-                    }
-
-                    else if (target.AccountBalance < transaction.Value)
-                    {
-                        validOperation = false;
-                        failedTransactionDetail = "Saldo insuficiente";
+                        failedTransactionDetail = "Número de conta de destino desativado";
                     }
                 }
 
