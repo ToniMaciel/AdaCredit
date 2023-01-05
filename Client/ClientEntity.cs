@@ -12,28 +12,32 @@ namespace AdaCredit.Client
         public string BankBranch { get; private set; }
         public decimal AccountBalance { get; private set; }
         public bool IsActive { get; private set; }
+        public string LastEmployeeToChange { get; private set; }
 
         public ClientEntity() { }
 
-        public ClientEntity(string name, string phoneNumber, string document, string accountNumber)
+        public ClientEntity(string name, string phoneNumber, string document, string accountNumber, string username)
         {
             Name = name;
             PhoneNumber = phoneNumber;
             Document = document;
             AccountNumber = accountNumber;
+            LastEmployeeToChange = username;
             BankBranch = "0001";
             AccountBalance = 0.0m;
             IsActive = true;
         }
 
-        internal void UpdatePhone(string newPhoneNumber)
+        internal void UpdatePhone(string newPhoneNumber, string username)
         {
             this.PhoneNumber = newPhoneNumber;
+            this.LastEmployeeToChange = username;
         }
 
-        internal void Disable()
+        internal void Disable(string username)
         {
             this.IsActive = false;
+            this.LastEmployeeToChange = username;
         }
         
         internal void UpdateBalance (decimal value)
@@ -54,7 +58,8 @@ namespace AdaCredit.Client
                 $"CPF: {this.Document}\n" +
                 $"Número de conta: {this.AccountNumber}\n" +
                 $"Saldo: {this.AccountBalance,0:F2}\n" +
-                $"Ativo: {(this.IsActive ? "Sim" : "Não")}";
+                $"Ativo: {(this.IsActive ? "Sim" : "Não")}\n" +
+                $"Último funcionário a alterar: {this.LastEmployeeToChange}";
         }
     }
 }

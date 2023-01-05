@@ -11,11 +11,10 @@ namespace AdaCredit.Client
     {
         private ClientRepository clientRepository = ClientRepository.GetInstance();
 
-        internal bool CreateClient(string name, string phoneNumber, string document)
+        internal bool CreateClient(string name, string phoneNumber, string document, string username)
         {
-            // TODO: deixar consistente com os outros métodos
             var accountNumber = UniqueAccountNumber();
-            var client = new ClientEntity(name, phoneNumber, document, accountNumber);
+            var client = new ClientEntity(name, phoneNumber, document, accountNumber, username);
             return clientRepository.AddClient(client);
         }
 
@@ -27,11 +26,11 @@ namespace AdaCredit.Client
         {
             return this.clientRepository.GetClients().Where(cli => cli.IsActive == isActive).ToList();
         }
-        internal bool DisableClient(ClientEntity client)
+        internal bool DisableClient(ClientEntity client, string username)
         {
             try
             {
-                client.Disable();
+                client.Disable(username);
                 clientRepository.Save();
                 return true;
             }
@@ -42,16 +41,16 @@ namespace AdaCredit.Client
                 return false;
             }
         }
-        internal bool UpdateClientPhone(ClientEntity userClient, string newPhoneNumber)
+        internal bool UpdateClientPhone(ClientEntity userClient, string newPhoneNumber, string username)
         {
             try
             {
-                userClient.UpdatePhone(newPhoneNumber);
+                userClient.UpdatePhone(newPhoneNumber, username);
                 clientRepository.Save();
                 return true;
             } catch (Exception ex) 
             {
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
@@ -84,7 +83,7 @@ namespace AdaCredit.Client
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }

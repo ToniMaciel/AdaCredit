@@ -19,7 +19,7 @@ namespace AdaCredit.UI
                 username = Prompt.Input<string>("Insira seu login");
                 secret = Prompt.Password("Insira sua senha");
 
-                successfulLogin = _facade.ValidLogin(username, secret);
+                successfulLogin = _facade.GetEmployeeControler().ValidLogin(username, secret);
                 
                 if (!successfulLogin)
                 {
