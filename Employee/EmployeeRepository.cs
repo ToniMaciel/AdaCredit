@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using static BCrypt.Net.BCrypt;
-using Bogus;
 
 namespace AdaCredit.Employee
 {
@@ -14,11 +12,16 @@ namespace AdaCredit.Employee
     {
         private static EmployeeRepository? instance;
         private List<EmployeeEntity> employees = new();
-        private string pathFile = BuildPathFile(Environment.CurrentDirectory);
+        private string pathDir = BuildPathDir(Environment.CurrentDirectory);
+        private string pathFile = String.Empty;
 
         private EmployeeRepository() 
         {
-            // TODO: mesmo rolê feito em cliente
+            if (!Directory.Exists(pathDir))
+                Directory.CreateDirectory(pathDir);
+
+            this.pathFile = pathDir + Path.DirectorySeparatorChar + "employees.csv";
+
             if (!File.Exists(pathFile))
             {
                 Save();
@@ -41,31 +44,13 @@ namespace AdaCredit.Employee
             return instance;
         }
 
-        private static string BuildPathFile(string currentDirectory)
+        private static string BuildPathDir(string currentDirectory)
         {
+            // TODO: arrumar isso aqui
             var baseDir = currentDirectory.Split("bin")[0];
-            return baseDir + "Employee" + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + "employees.csv";
+            return baseDir + "Employee" + Path.DirectorySeparatorChar + "Resources";
         }
-
-        internal EmployeeEntity? addEmployee(string login, string name, string document)
-        {
-            var newSalt = new Faker().Random.Int().ToString();
-            var newEmployee = new EmployeeEntity(login, name, document, HashPassword(newSalt + "pass"), newSalt);
-            
-            try
-            {
-                this.employees.Add(newEmployee);
-                Save();
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return null;
-            }
-
-            return newEmployee;
-        }
-
-        private void Save()
+        internal void Save()
         {
             try
             {
@@ -77,63 +62,22 @@ namespace AdaCredit.Employee
                 Console.WriteLine(ex);
             }
         }
-
-        internal bool IsValidLogin(string login, string password)
-        {
-            var activeEmployees = employees.Where(emp => emp.IsActive).ToList();
-
-            if(activeEmployees.Count == 0 && login == "user" && password == "pass")
-                    return true;
-            
-            var employee = activeEmployees.FirstOrDefault(x => x.Username == login);
-            
-            if(employee != null && Verify(employee.Salt+password, employee.Hash))
-                    return true;
-
-            return false;
-        }
-
         internal List<EmployeeEntity> GetEmployees()
         {
             return this.employees;
         }
-
-        internal bool ChangeEmployeePassword(EmployeeEntity employee, string newPassword)
+        internal List<EmployeeEntity> GetActiveEmployees()
+        {
+            return this.employees.Where(emp => emp.IsActive).ToList();
+        }
+        internal bool AddEmployee(EmployeeEntity newEmployee)
         {
             try
             {
-                employee.UpdateHash(HashPassword(employee.Salt + newPassword));
+                this.employees.Add(newEmployee);
                 Save();
                 return true;
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-        }
-
-        internal bool DisableEmployee(string userEmployee)
-        {
-            var employee = employees.FirstOrDefault(x => x.Username == userEmployee);
-
-            if (employee != null)
-            {
-                employee.Disable();
-                Save();
-                return true;
-            }
-
-            return false;
-        }
-
-        internal bool UpdateLogin(EmployeeEntity? employee, DateTime now)
-        {
-            try
-            {
-                employee.UpdateLogin(now);
-                Save();
-                return true;
-            } catch (Exception ex) 
+            } catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return false;

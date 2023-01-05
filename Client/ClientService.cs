@@ -19,7 +19,6 @@ namespace AdaCredit.Client
             return clientRepository.AddClient(client);
         }
 
-
         internal List<ClientEntity> GetClients()
         {
             return this.clientRepository.GetClients();

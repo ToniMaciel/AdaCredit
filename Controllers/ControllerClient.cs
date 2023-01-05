@@ -15,16 +15,11 @@ namespace AdaCredit.Controllers
             this.clientService = new ClientService();
         }
         internal bool CreateClient(string name, string phoneNumber, string document) => clientService.CreateClient(name, phoneNumber, document);
-
         internal bool DisableClient(ClientEntity client) => clientService.DisableClient(client);
-
         internal ClientEntity GetClient(string accountNumber) => clientService.GetClientByAccNumber(accountNumber);
-
         internal List<ClientEntity> GetClients() => clientService.GetClients();
         internal List<ClientEntity> GetClients(bool isActive) => clientService.GetClients(isActive);
-
         internal void UpdateClientBalance(ClientEntity client, decimal value) => clientService.UpdateClientBalance(client, value);
-
         internal bool UpdateClientPhone(ClientEntity userClient, string newPhoneNumber) => clientService.UpdateClientPhone(userClient, newPhoneNumber);
     }
 }
