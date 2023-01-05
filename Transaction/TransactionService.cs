@@ -7,6 +7,7 @@ using AdaCredit.Client;
 using System.Linq;
 using AdaCredit.Controllers;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace AdaCredit.Transaction
 {
@@ -239,6 +240,32 @@ namespace AdaCredit.Transaction
                         Console.WriteLine(ex.Message);
                     }
                 }
+            }
+        }
+
+        internal static void WriteData(string bankName, List<TransactionEntity> transactions)
+        {
+            string pendingTransactionsPath = transactionsDir + Path.DirectorySeparatorChar + "Pending";
+
+            if (!Directory.Exists(pendingTransactionsPath))
+                Directory.CreateDirectory(pendingTransactionsPath);
+
+            var filePath = $"{pendingTransactionsPath}{Path.DirectorySeparatorChar}{bankName}-{DateTime.Now:yyyyMMdd}.csv";
+
+            try
+            {
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = false,
+                };
+
+                using var writer = new StreamWriter(filePath);
+                using var csv = new CsvWriter(writer, config);
+                csv.WriteRecords(transactions);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

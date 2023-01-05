@@ -11,5 +11,17 @@
         public string TransactionType { get; protected set; }
         public decimal Value { get; protected set; }
         public TransactionEntity() { }
+
+        public TransactionEntity(string bankCodeSource, string bankBranchSource, string accountNumberSource, string bankCodeTarget, string bankBranchTarget, string accountNumberTarget, string type, decimal value)
+        {
+            BankCodeSource = bankCodeSource;
+            BankBranchSource = bankBranchSource;
+            AccountNumberSource = accountNumberSource;
+            BankCodeTarget = bankCodeTarget;
+            BankBranchTarget = bankBranchTarget;
+            AccountNumberTarget = accountNumberTarget;
+            TransactionType = type;
+            Value = value;
+        }
     }
 }

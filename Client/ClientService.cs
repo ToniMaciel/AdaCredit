@@ -64,12 +64,11 @@ namespace AdaCredit.Client
         {
             bool unique = false;
             string accountNumber = string.Empty;
-            Faker faker = new();
 
             while(!unique)
             {
-                accountNumber = faker.Random.ReplaceNumbers("#####-#");
-                unique = clientRepository.GetClients().Select(cli => cli.AccountNumber == accountNumber).Any();
+                accountNumber = new Faker().Random.ReplaceNumbers("#####-#");
+                unique = !clientRepository.GetClients().Any(cli => cli.AccountNumber == accountNumber);
             }
 
             return accountNumber;

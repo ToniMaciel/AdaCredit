@@ -1,5 +1,6 @@
 ﻿using AdaCredit.Controllers;
 using AdaCredit.Employee;
+using AdaCredit.Utils;
 using ConsoleTools;
 using Sharprompt;
 using System;
@@ -9,8 +10,13 @@ namespace AdaCredit.UI
     public static class UserInterface
     {
         private static Facade _facade = new();
-        public static void Login(string[] args)
+        public static void Login(string[] args, bool generateRandomData)
         {
+            if (generateRandomData)
+            {
+                SampleDataGenerator.RunGeneration(_facade);
+            }
+
             bool successfulLogin = false;
             string username = "", secret;
             
