@@ -10,7 +10,7 @@ namespace AdaCredit.Employee
     {
         private EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
 
-        internal EmployeeEntity? AddEmployee(string login, string name, string document)
+        internal EmployeeEntity? AddEmployee(string login, string name, string document, string username)
         {
             var newSalt = new Faker().Random.Int().ToString();
             var newEmployee = new EmployeeEntity(login, name, document, HashPassword(newSalt + "pass"), newSalt);
@@ -28,11 +28,11 @@ namespace AdaCredit.Employee
             return newEmployee;
         }
 
-        internal bool ChangeEmployeePassword(EmployeeEntity employee, string newPassword)
+        internal bool ChangeEmployeePassword(EmployeeEntity employee, string newPassword, string usernameLogged)
         {
             try
             {
-                employee.UpdateHash(HashPassword(employee.Salt + newPassword));
+                employee.UpdateHash(HashPassword(employee.Salt + newPassword), usernameLogged);
                 this.employeeRepository.Save();
                 return true;
             }
@@ -43,11 +43,11 @@ namespace AdaCredit.Employee
             }
         }
 
-        internal bool DisableEmployee(EmployeeEntity employee)
+        internal bool DisableEmployee(EmployeeEntity employee, string userLogged)
         {
             try
             {
-                employee.Disable();
+                employee.Disable(userLogged);
                 this.employeeRepository.Save();
                 return true;
             }

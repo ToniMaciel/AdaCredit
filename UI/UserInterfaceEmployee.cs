@@ -8,51 +8,71 @@ namespace AdaCredit.UI
 {
     public static class UserInterfaceEmployee
     {
-        public static void Run(string[] args, ControllerEmployee controllerEmployee, string username)
+        public static void Run(string[] args, ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
         {
             var employeeMenu = new ConsoleMenu(args, level: 1)
-              .Add("Cadastrar Novo Funcionário", () => CreateNewEmployee(controllerEmployee))
-              .Add("Alterar Senha de um Funcionário existente", () => ChangeEmployeePassword(facade))
-              .Add("Desativar Cadastro de um Funcionário existente", () => DisableEmployee(facade))
+              .Add("Cadastrar Novo Funcionário", () => CreateNewEmployee(controllerEmployee, userLogged))
+              .Add("Alterar Senha de um Funcionário existente", () => ChangeEmployeePassword(controllerEmployee, userLogged))
+              .Add("Desativar Cadastro de um Funcionário existente", () => DisableEmployee(controllerEmployee, userLogged))
               .Add("Voltar", ConsoleMenu.Close)
               .Configure(config =>
               {
+                  config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                   config.Selector = "--> ";
                   config.Title = "Funcionário";
-                  config.EnableBreadcrumb = true;
-                  config.WriteBreadcrumbAction = titles => Console.WriteLine(string.Join(" / ", titles));
+                  config.EnableBreadcrumb = false;
+                  config.EnableWriteTitle = false;
               });
 
             employeeMenu.Show();
         }
 
-        private static void DisableEmployee(Facade facade)
+        private static void DisableEmployee(ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
         {
-            var userEmployee = Prompt.Select("Selecione o funcionário", facade.GetEmployeesUsers());
+            var userEmployee = Prompt.Select("Selecione o funcionário", controllerEmployee.GetEmployees());
             // TODO: colocar mensagem de confirmação
-            bool success = facade.DisableEmployee(userEmployee);
-            // TODO: printar mensagem de sucesso
+            bool success = controllerEmployee.DisableEmployee(userEmployee, userLogged.Username);
+            
+            if (success)
+                Console.WriteLine($"\n{userEmployee} desativado com sucesso!");
+            else
+                Console.WriteLine("\nNão foi possível desativar o cliente");
+
+            Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
+            Console.ReadKey();
+            
+            if(userEmployee.Username == userLogged.Username)
+            {
+                Console.WriteLine("ATENÇÂO: Seu usuário foi desativado.\n<<Aperte qualquer tecla para sair>>");
+                Console.ReadKey();
+            }
         }
 
-        private static void ChangeEmployeePassword(Facade facade)
+        private static void ChangeEmployeePassword(ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
         {
-            // TODO: pode passar os funcionários logo, só precisa fazer um toString
-            var userEmployee = Prompt.Select("Selecione o funcionário", facade.GetEmployeesUsers());
-            // TODO: verificar senha
-            var newPassword = Prompt.Password("Insira a nova senha");
-            // TODO: colocar quem é que tá mudando
-            bool success = facade.ChangeEmployeePassword(userEmployee, newPassword);
-            // TODO: printar mensagem de sucesso
+            var userEmployee = Prompt.Select("Selecione o funcionário", controllerEmployee.GetEmployees());
+            UpdateNewPassword(userEmployee, controllerEmployee, userLogged);
         }
 
-        internal static EmployeeEntity? CreateNewEmployee(ControllerEmployee controllerEmployee)
+        internal static EmployeeEntity? CreateNewEmployee(ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
         {
-            // TODO: checar login != user
-            var login = Prompt.Input<string>("Insira o login do funcionário");
+            string login = "user";
+            while (login == "user")
+            {
+                login = Prompt.Input<string>("Insira o login do funcionário");
+
+                if (login == "user")
+                {
+                    Console.Clear();
+                    Console.WriteLine("\"user\" não é um nome válido para o usuário, por favor insira outro nome.");
+                }
+
+            }
+
             var name = Prompt.Input<string>("Insira o nome do funcionário");
             var document = Prompt.Input<string>("Insira o CPF do funcionário");
 
-            var employee = controllerEmployee.CreateEmployee(login, name, document);
+            var employee = controllerEmployee.CreateEmployee(login, name, document, (userLogged is null ? login : userLogged.Username));
 
             if (employee is not null)
                 Console.WriteLine("\nFuncionário adicionado com sucesso!");
@@ -65,7 +85,7 @@ namespace AdaCredit.UI
             return employee;
         }
 
-        internal static void UpdateNewPassword(EmployeeEntity employee, ControllerEmployee controllerEmployee)
+        internal static void UpdateNewPassword(EmployeeEntity employee, ControllerEmployee controllerEmployee, EmployeeEntity userLogged)
         {
             bool isEquals = false;
             string newPassword = String.Empty;
@@ -81,9 +101,15 @@ namespace AdaCredit.UI
                     Console.WriteLine("As senhas estão diferentes, por favor informe novamente!");
                 }
             }
-            // TODO: colocar quem é que tá mudando
-            bool success = controllerEmployee.ChangeEmployeePassword(employee, newPassword);
-            // TODO: printar mensagem de sucesso
+
+            bool success = controllerEmployee.ChangeEmployeePassword(employee, newPassword, userLogged.Username);
+            if (success)
+                Console.WriteLine("\nSenha alterada com sucesso!");
+            else
+                Console.WriteLine("\nNão foi possível alterar senha.");
+
+            Console.WriteLine("<<Aperte qualquer tecla para continuar>>");
+            Console.ReadKey();
         }
     }
 }

@@ -37,12 +37,12 @@ namespace AdaCredit.UI
             if(employee is null)
             {
                 Console.WriteLine("Será necessário adicionar um funcionário para continuar.");
-                employee = UserInterfaceEmployee.CreateNewEmployee(_facade.GetEmployeeControler());
+                employee = UserInterfaceEmployee.CreateNewEmployee(_facade.GetEmployeeControler(), employee);
             }
             else if(employee.IsFirstLogin)
             {
                 Console.WriteLine("Será necessário mudar sua senha:");
-                UserInterfaceEmployee.UpdateNewPassword(employee, _facade.GetEmployeeControler());
+                UserInterfaceEmployee.UpdateNewPassword(employee, _facade.GetEmployeeControler(), employee);
             }
 
             _facade.GetEmployeeControler().UpdateLogin(employee, DateTime.Now);
